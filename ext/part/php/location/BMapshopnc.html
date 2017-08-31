@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>百度地图调用</title>
+	<script language="javascript" type="text/javascript" src="../../_Material/js/jquery-1.11.0.min.js"></script>
+</head>
+<body>
+<div id="container" class="w500 h200 mt10"></div>
+
+<script type="text/javascript">
+var cityName = '';
+var address = '合肥';
+var store_name = '测试地址';
+var map = "";
+var localCity = "";
+var opts = {width : 150,height: 50,title : "商铺名称:"+store_name}
+function initialize() {
+	map = new BMap.Map("container");
+	localCity = new BMap.LocalCity();
+
+	map.enableScrollWheelZoom();
+	map.addControl(new BMap.NavigationControl());
+	map.addControl(new BMap.ScaleControl());
+	map.addControl(new BMap.OverviewMapControl());
+	localCity.get(function(cityResult){
+	  if (cityResult) {
+	  	var level = cityResult.level;
+	  	if (level < 13) level = 13;
+	    map.centerAndZoom(cityResult.center, level);
+	    cityResultName = cityResult.name;
+	    if (cityResultName.indexOf(cityName) >= 0) cityName = cityResult.name;
+	    	    	getPoint();
+	    	  }
+	});
+}
+
+function loadScript() {
+	var script = document.createElement("script");
+	script.src = "http://api.map.baidu.com/api?v=1.2&callback=initialize";
+	document.body.appendChild(script);
+}
+function getPoint(){
+	var myGeo = new BMap.Geocoder();
+	myGeo.getPoint(address, function(point){
+	  if (point) {
+	    setPoint(point);
+	  }
+	}, cityName);
+}
+function setPoint(point){
+	  if (point) {
+	    map.centerAndZoom(point, 16);
+	    var marker = new BMap.Marker(point);
+	    var infoWindow = new BMap.InfoWindow("商铺地址:"+address, opts);
+			marker.addEventListener("click", function(){
+			   this.openInfoWindow(infoWindow);
+			});
+	    map.addOverlay(marker);
+			marker.openInfoWindow(infoWindow);
+	  }
+}
+$(function(){
+	loadScript();
+});
+
+</script>
+</body>
+</html>

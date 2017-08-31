@@ -1,0 +1,22 @@
+@charset "UTF-8";
+/*全局样式*/ 
+body, p, h1, h2, h3, h4, ul, ol, li, dl, dt, dd, input, form, button { 
+    padding: 0; margin: 0; list-style: none; font-weight: normal; font-family: "微软雅黑", arial; word-break: break-all; 
+} 
+.lf { float: left; } 
+.rt { float: right; } 
+.clear { clear: both; } 
+a { text-decoration: none;color:#333; } 
+img { border: none; } 
+i,em{font-style:normal;} 
+/*头部*/ 
+.header_bg{width:1100px; margin:0 auto; } 
+.logo{height:100px; margin:20px auto; overflow:hidden; color:black; } 
+.logo a{float:left; } 
+.logo img{float:left; height:100px; } 
+.logo h1{width:320px; float:left; } 
+.logo span{display:inline-block; width:100%; float:left; text-align:center; font-size:36px; letter-spacing:8px; height:70px; line-height:70px; font-weight:bold; } 
+.logo i{display:inline-block; width:100%; float:left; text-align:center; font-size:14px; line-height:16px; margin:7px 0; text-transform:uppercase; } 
+/*通用底部样式*/ 
+.footer_bg{width:100%; min-width:1100px; background:#eeeeee; padding:8px 0; color:#2e2d2d; margin-top:50px; } 
+.footer_bg p{margin:0 auto; font-size:14px; line-height:34px; text-align:center; color:#333; }

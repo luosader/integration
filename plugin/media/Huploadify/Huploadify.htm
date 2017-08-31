@@ -1,0 +1,61 @@
+<link rel="stylesheet" type="text/css" href="h5/Huploadify.css"/>
+<script type="text/javascript" src="h5/jquery.Huploadify.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('#Huploadify').Huploadify({
+            auto: true,// 选择文件后自动上传
+            fileTypeExts: '*.jpg;*.jpeg;*.png;*.gif;*.bmp;*.zip;*.tar;*.7z;*.gz',// 允许文件类型
+            multi: false,// false一次只能选一个文件,非技术人员勿改
+            formData: {key:'file',key2:'2'},
+            fileObjName: 'attachfiles',//在后端接受文件的参数名称，如PHP中的$_FILES['attachfiles']
+            fileSizeLimit: 2048,// 最大单个文件上传大小，单位 KB。
+            showUploadedPercent: true,//是否实时显示上传的百分比，如20%
+            showUploadedSize: true,// 
+            removeTimeout: 9999999,// 超时
+            uploader:'Huploadify.php',// PHP交互地址
+            onInit:function(){
+                alert('初始化');
+            },
+            onUploadStart:function(){
+                alert('开始上传');
+            },
+            onUploadComplete:function(file,responseText){
+                alert('上传完成:文件信息='+file+'&php端返回数据='+responseText);
+                // console.log(file.index);
+                // console.log(responseText);
+                var His_single = '{$His_single}';
+                // alert(responseText)
+                // alert(His_single)
+                if (responseText) {
+                    if (file.index>5) {
+                        $('#Huploadify').attr('disabled',true);
+                    }
+                    if (His_single) {
+                        if (file.index>1) {
+                            responseText = $('#filepath').val()+','+responseText;
+                        }
+                        $('#filepath').val(responseText);
+                        showimg = responseText.split(",");
+                        // console.log(showimg);
+                        $('#Huploadify_preview_img').attr('src',showimg[showimg.length-1]);
+                        $('#Huploadify_preview_img').removeClass('hidden');
+                    } else {
+                        if (file.index>1) {
+                            responseText = $('#file_ids').val()+','+responseText;
+                        }
+                        $('#file_ids').val(responseText);
+                    }
+                    $('#Huploadify_tips').html('');
+                } else {
+                    $('#Huploadify_tips').html('图片操作出错！');
+                }
+            },
+            onCancel:function(file){
+                console.log('删除的文件：'+file);
+                console.log(file);
+                $('#filepath').val('');
+            }
+        });
+    });
+</script>
+<div id="Huploadify">请选择文件</div>

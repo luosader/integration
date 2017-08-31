@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>集成接口</title>
+    <link rel="stylesheet" type="text/css" href="<?php echo ROOT_HOST . SOUR_COM .'css/common.css' ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo ROOT_HOST . SOUR_COM .'css/block.css' ?>">
+    <script type="text/javascript" src=""></script>
+</head>
+<body>
+    <?php foreach ($arrMenu as $val) : ?>
+    <h1><?php echo $val['name'] ?></h1>
+    <div align="center">
+        <ul>
+            <?php foreach ($val['sub'] as $v): ?>
+            <li <?php echo $v['attr'] ?> style="background-color: <?php echo randColor() ?>">
+                <a href="<?php echo $v['href'] ?>"><?php echo $v['name'] ?></a>
+            </li>
+            <?php endforeach ?>
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <?php endforeach; ?>
+    <div style="height: 100px;"></div>
+</body>
+</html>

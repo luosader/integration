@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>jQuery select表单提交省市区城市三级联动</title>
+<script src="1/jquery-1.js" type="text/javascript"></script>
+<script src="1/Area.js" type="text/javascript"></script>
+<script src="1/AreaData_min.js" type="text/javascript"></script>
+<script type="text/javascript">
+//初始化加载地区 如果不须要请把后三个参数改为 "0"
+$(function (){
+	initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, sub_arr, '34', '0', '0');
+});
+</script>
+</head>
+<body>
+
+<form action="" method="POST">
+<label>请选择省市地区：<br></label><br>
+<select id="seachprov" name="prov" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');"></select>&nbsp;&nbsp;
+<select id="seachcity" name="city" onChange="changeCity(this.value,'seachdistrict','seachdistrict');"></select>&nbsp;&nbsp;
+<span id="seachdistrict_div"><select id="seachdistrict" name="strict"></select></span>
+<br><br>
+<div onClick="showAreaID();" style="border:1px solid #CCC;width:150px;cursor:pointer;">点击获取地区</div>
+<br>
+<input type="button" name="sub" value="提交">
+</form>
+
+</body>
+</html>

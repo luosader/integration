@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>阳光国际派遣-报名</title>
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="css/enrol.css">	
+	<script type="text/javascript" src="js/jquery-1.12.1.min.js"></script>
+	<script type="text/javascript" src="js/enrol.js"></script>
+	<script type="text/javascript" src="js/Area.js"></script>
+	<script type="text/javascript" src="js/AreaData_min.js"></script>
+	<script type="text/javascript">
+		var prov = '{$user.prov}',
+			city = '{$user.city}',
+			strict = '{$user.strict}';
+		{literal}
+		//初始化加载地区 如果不须要请把后三个参数改为 "0"
+		$(function (){
+			if (!prov) { prov = 34; city=0; strict=0; }
+			initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, sub_arr, prov, city, strict);
+		});
+		function refreshimage() {
+			var cap = document.getElementById('vcode');
+			cap.src = cap.src + '?';
+		}
+		{/literal}
+	</script>
+    <style>
+    	{literal}
+        .popup{
+        	display:none;
+            width:100%;height:100%;
+            position:fixed;top:0;left:0%;
+            transform:translate(0,0);
+            -ms-transform:translate(0,0);
+            -moz-transform:translate(0,0);
+            -webkit-transform:translate(0,0);
+            -o-transform:translate(0,0);
+            background:#ccc;opacity:0.9;
+            text-align:center;
+        }
+        .popup p{margin-top:25%;color:#333;font-size:20px;}
+        {/literal}
+    </style>
+</head>
+<body>
+	<div class="popup" id="popup" >
+		<p>数据提交中，请耐心等待……<br>（可能图片过大：等待时间=当前所有图片大小 / 当前网速）</p>
+	</div>
+	<div class="container_bg">
+		<!-- 头部 -->
+		{include file="inc/header.htm"}
+		<!-- 报名信息 -->
+		<div class="contain_bg">
+			<div class="contain">
+				<p class="contain_title">欢迎您来到报名页面
+					<a href="user.php?rec=logout" id="tuichu">退出</a>
+				</p>
+				<div class="contain_cont">
+					<form action="enrol.php" method="post" enctype="multipart/form-data" id="thisform">
+						<ul class="enrol_table">
+							<li>
+								<label for="truename"><span class="red"></span>真实姓名：</label>
+								<input required="true" type="text" name="truename" value="{$user.truename}" id="truename" onkeyup="hackcheck('truename');">
+								<em id="truename_msg">2-4个字符，请输入汉字</em>
+							</li>
+							<li>
+								<label for="cardtype"><span class="red"></span>证件类型：</label>
+								<input required="true" type="text" name="cardtype" value="{if $user.cardtype}{$user.cardtype}{else}中华人民共和国身份证件{/if}" required id="cardtype" onfocus=this.blur()>
+								<span class="succes"></span>
+							</li>
+							<li>
+								<label for="IDcard"><span class="red"></span>证件号码：</label>
+								<input required="true" type="text" name="IDcard" value="{$user.card}" required id="IDcard" onkeyup="hackcheck('IDcard');">
+								<em id="IDcard_msg">请输入身份证号码！</em>
+							</li>	
+							<li class="box1">
+								<p>请上传身份证照片<span>后台会进行审核，请认真上传。</span>图片不能太大。</p>
+								<div class="lf">
+									<label class="lf" style="display:inline-block;">正面：</label>
+									<div class="lf imgbox">
+										<div id="preview1" class="imgbox1">{if $user.IDpic1thumb}<img {$thumb.style} src="{$user.IDpic1thumb}" class="preimg">{/if}</div>  
+										<span class="btn upload">选择文件
+											<input type="file" class="upload_pic" onchange="preview(this,1)" name="IDpic1" value="{$user.IDpic1}" id="">
+										</span>
+									</div>
+								</div>
+								<div class="lf" style="margin-left:70px;">
+
+									<label class="lf" style="display:inline-block;">反面：</label>
+									<div class="lf imgbox">
+										<div id="preview2" class="imgbox1">{if $user.IDpic2thumb}<img {$thumb.style} src="{$user.IDpic2thumb}" class="preimg">{/if}</div>  
+										<span class="btn upload">选择文件
+											<input type="file" class="upload_pic" onchange="preview(this,2)" name="IDpic2" value="{$user.IDpic2}" id="">
+										</span>
+									</div>
+								</div>
+								<div class="clear"></div>
+							</li>
+
+							<li>
+								<label for=""><span class="red"></span>性别：</label>
+								<label style="width:50px;">
+									<input type="radio" name="sex" {if $user.sex!='1'}checked{/if} value="0">男
+								</label>
+								<label style="width:50px;">
+									<input type="radio" name="sex" {if $user.sex=='1'}checked{/if} value="1">女
+								</label>
+							</li>
+							<li>
+								<div class="lf box2">
+									<label for="oldschool"><span class="red"></span>毕业高中：</label>
+									<input type="text" name="oldschool" value="{$user.oldschool}" id="oldschool" onkeyup="hackcheck('oldschool');">
+									<em id="oldschool_msg">请输入毕业院校！</em>
+									<div class="box2_1">
+										<p>请上传毕业证照片<span>后台会进行审核，请认真上传。</span></p>
+										<div class="imgbox">
+											<div id="preview3" class="imgbox1">{if $user.oldschool_picthumb}<img {$thumb.style} src="{$user.oldschool_picthumb}" class="preimg">{/if}</div>  
+											<span class="btn upload">选择文件
+												<input type="file" class="upload_pic" onchange="preview(this,3)" name="oldschool_pic" value="{$user.oldschool_pic}" id="">
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="lf box2">
+									<label for="grades"><span class="red"></span>高考分数：</label>
+									<input type="text" name="grades" value="{$user.grades}" id="grades" onkeyup="hackcheck('grades');">
+									<em id="grades_msg">请输入高考分数！</em>
+									<div class="box2_1">
+										<p>请上传分数完整截图<span>后台会进行审核，请认真上传。</span></p>
+										<div class="imgbox">
+											<div id="preview4" class="imgbox1">{if $user.grades_picthumb}<img {$thumb.style} src="{$user.grades_picthumb}" class="preimg">{/if}</div>  
+											<span class="btn upload">选择文件
+												<input type="file" class="upload_pic" onchange="preview(this,4)" name="grades_pic" value="{$user.grades_pic}" id="">
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<label for="school"><span class="red"></span>报考院校：</label>
+								<select name="school" id="school" autocomplete="off" onchange="hackcheck('school');">
+									<option value="" {if $user.school==''}selected{/if} >--请选择院校--</option>
+									<!-- {foreach from=$school_conf item=v} -->
+									<option value="{$v}" {if $v eq $user.school}selected{/if}>{$v}</option>
+									<!-- {/foreach} -->
+								</select>
+								<em id="school_msg">请输入报考院校！</em>
+							</li>
+							<li>
+								<label for="prefession1"><span class="red"></span>报考专业一：</label>
+								<select name="prefession1" id="prefession1" autocomplete="off" onchange="prefession_check(1);">
+									<option value="" {if $user.prefession1==''}selected{/if} >--请选择专业--</option>
+									<!-- {foreach from=$professional_conf item=pro} -->
+									<option value="{$pro}" {if $pro eq $user.prefession1}selected{/if}>{$pro}</option>
+									<!-- {/foreach} -->
+								</select>
+								<em id="prefession1_msg">请选择正确的专业一，避免重复</em>
+							</li>
+							<li>
+								<label for="prefession2"><span class="red"></span>报考专业二：</label>
+								<select name="prefession2" id="prefession2" autocomplete="off" onchange="prefession_check(2);">
+									<option value="" {if $user.prefession2==''}selected{/if} >--请选择专业--</option>
+									<!-- {foreach from=$professional_conf item=pro} -->
+									<option value="{$pro}" {if $pro eq $user.prefession2}selected{/if}>{$pro}</option>
+									<!-- {/foreach} -->
+								</select>
+								<em id="prefession2_msg">请选择正确的专业二，避免重复</em>
+							</li>
+							<li>
+							<label for="prefession3"><span class="red"></span>报考专业三：</label>
+								<select name="prefession3" id="prefession3" autocomplete="off" onchange="prefession_check(3);">
+									<option value="" {if $user.prefession3==''}selected{/if} >--请选择专业--</option>
+									<!-- {foreach from=$professional_conf item=pro} -->
+									<option value="{$pro}" {if $pro eq $user.prefession3}selected{/if}>{$pro}</option>
+									<!-- {/foreach} -->
+								</select>
+								<em id="prefession3_msg">请选择正确的专业三，避免重复</em>
+							</li>
+							<li>
+								<label for="address"><span class="red"></span>家庭地址：</label>
+								<select id="seachprov" name="prov" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');"></select>&nbsp;&nbsp;
+								<select id="seachcity" name="city" onChange="changeCity(this.value,'seachdistrict','seachdistrict');"></select>&nbsp;&nbsp;
+								<span id="seachdistrict_div"><select id="seachdistrict" name="strict"></select></span>
+							</li>
+							<li>
+								<label></label>
+								<textarea cols="83" rows="3" name="addrdiy" placeholder="可以在这里写详细地址">{$user.addrdiy}</textarea>
+							</li>
+							<li>
+								<label for="telephone"><span class="red"></span>联系方式：</label>
+								<input type="text" name="telephone" disabled="disabled" value="{$user.tel}" id="telephone">
+								<em>此为您的登录方式，不可修改！</em>
+							</li>
+							<!-- {if $user.is_finish==0} -->
+							<li class="captcha_cont">
+								<div class="lf">
+									<label for="captcha" style="width:110px;"><span class="red"></span>验证码：</label>
+									<input required type="text" name="captcha" id="captcha" onkeyup="hackcheck('captcha');">
+									<em id="captcha_msg">验证码必填</em>
+								</div>
+								<div class="lf">
+									<img id="vcode" src="captcha.php" alt="启用验证码" border="1" onClick="refreshimage()" title="看不清？点击更换另一个验证码。">
+								</div>
+								<div class="clear"></div>
+							</li>
+							<li>
+								<input type="hidden" name="baoming" value="true">
+								<input type="hidden" name="user_id" value="{$user.user_id}">
+								<input type="hidden" name="token" value="{$token}">
+								<input id="submit_check" type="button" value="预报名">
+								<input type="reset" value="重置" />
+								<span id="submit_check_msg"></span>
+							</li>
+							<!-- {/if} -->
+						</ul>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			{literal}
+			$('#submit_check').click(function() {
+				prefession_check(99);
+			});
+
+			function hackcheck(v) {
+				var qe = $('#'+v),
+					msg = $('#'+v+'_msg'),
+					val = qe.val();
+				if (!val) {
+					msg.css('color', '#F00');
+					qe.focus();
+					// $("input[name="+v+"]").focus();
+					return 0;
+				} else {
+					msg.css('color', '#999');
+					return 1;
+				}
+			}
+
+			function validate_rule(argument) {
+				// body...
+			}
+
+			function prefession_check(o) {
+				var p1 = $('#prefession1').val();
+				var p2 = $('#prefession2').val();
+				var p3 = $('#prefession3').val();
+				if (o==1) {
+					if (p2 && p1==p2) {
+						alert('专业一与专业二不能一样');
+						hack_prefession(1,o);
+					} else if (p3 && p1==p3) {
+						alert('专业一与专业三不能一样');
+						hack_prefession(1,o);
+					} else {
+						hack_prefession(2,o);
+					}
+				} else if (o==2) {
+					if (p1 && p2==p1) {
+						alert('专业二与专业一不能一样');
+						hack_prefession(1,o);
+					} else if (p3 && p2==p3) {
+						alert('专业二与专业三不能一样');
+						hack_prefession(1,o);
+					} else {
+						hack_prefession(2,o);
+					}
+				} else if (o==3) {
+					if (p1 && p3==p1) {
+						alert('专业三与专业一不能一样');
+						hack_prefession(1,o);
+					} else if (p2 && p3==p2) {
+						alert('专业三与专业二不能一样');
+						hack_prefession(1,o);
+					} else {
+						hack_prefession(2,o);
+					}
+				} else {
+					var is_sub = true;
+					if (!p1) {alert('请选择专业一');hack_prefession(1,1);is_sub=false;} else {hack_prefession(2);}
+					if (!p2) {alert('请选择专业二');hack_prefession(1,2);is_sub=false;} else {hack_prefession(2);}
+					if (!p3) {alert('请选择专业三');hack_prefession(1,3);is_sub=false;} else {hack_prefession(2);}
+					if (p1==p2) {
+						alert('专业一与专业二不能一样');
+						hack_prefession(1,1);
+					} else if (p1==p3) {
+						alert('专业一与专业三不能一样');
+						hack_prefession(1,2);
+					} else if (p2==p3) {
+						alert('专业二与专业三不能一样');
+						hack_prefession(1,3);
+					} else {
+						var myfocus = new Array('truename','IDcard','oldschool','grades','school','captcha'),
+							hacklen = myfocus.length,
+							hack = 0;
+						for(var i = 0;i < hacklen; i++) {
+							// document.write(myfocus[i]+",");
+							hack += hackcheck(myfocus[i]);
+						}
+						if (is_sub && hack==hacklen) { 
+							$('#submit_check').attr('disabled', true);
+							$('#popup').show();
+							$('#submit_check_msg').html('数据提交中……');
+							$('#thisform').submit();
+						}
+					}
+				}
+			}
+
+			function hack_prefession(h,p='') {
+				if (h==1) {
+					$('#submit_check').attr('disabled', true);
+					// $('#vcode').hide();
+					// if (p) { $('#prefession'+p+'_msg').show(); }
+					if (p) { $('#prefession'+p+'_msg').css('color', '#F00'); }
+				} else {
+					$('#submit_check').attr('disabled', false);
+					// $('#vcode').show();
+					// if (p) { $('#prefession'+p+'_msg').hide(); }
+					if (p) { $('#prefession'+p+'_msg').css('color', '#999'); }
+				}
+			}
+			{/literal}
+		</script>
+		<!-- 通用底部 -->
+		{include file="inc/footer.htm"}
+	</div>
+</body>
+</html>

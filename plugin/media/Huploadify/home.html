@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>H5 - 文件上传</title>
+    <script type="text/javascript" src="h5/jquery-1.8.3.min.js"></script>
+</head>
+<body>
+    <h1>H5 - 文件上传</h1>
+    <div>
+        <form action="index.php" method="post" enctype="multipart/form-data" >
+            添加附件：<span id="Huploadify_tips" style="color:red;"></span>
+            <img hidden class="Huploadify_preview_img" src="">
+            <!-- <input type="file" id="uploadfiles" name="uploadfiles"> -->
+            <input type="hidden" name="file_ids" id="file_ids" value="0">
+            <input type="hidden" name="filepath" id="filepath" class="form-control" value="{$info['pic']}">
+            <?php echo require 'Huploadify.htm' ?>
+            <p>最多可添加五个附件，每个大小不超过2M.</p>
+            <!-- 注意：当数据不是以表单形式提交时，先用js处理再跳转 -->
+            <input type="submit" name="submit" value="上传">
+        </form>
+    </div>
+</body>
+</html>

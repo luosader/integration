@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>PHP天气API接口</title>
+    <link rel="stylesheet" href="main.css" type="text/css" />
+</head>
+
+<body>
+    <div class="top">
+        <div class="top_content">
+            <div id="calendarArea"> 
+                <span class="datepic"> <font id="weekday"></font> </span>
+                <ul>
+                    <li> <span id="lunarday"></span> </li>
+                    <li> <span id="dateday"></span> </li>
+                </ul>
+            </div>
+            <div id="topWeatherArea">
+                <ul class="cityWrap">
+                    <li class="name">
+                        <span class="name"></span>
+                    </li>
+                    <li>
+                        <span class="info"></span>
+                    </li>
+                </ul>
+                <span class="weapic"></span>
+                <ul class="cityInfo">
+                    <li class="name">
+                        <span class="name"></span>
+                    </li>
+                    <li>
+                        <span class="info"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="jquery.min.js"></script> 
+    <script type="text/javascript" src="loadjs.js"></script> 
+    <script type="text/javascript">
+        var weatherInfo;
+        var lunar;
+        var date = new Date();
+        var g={"晴":"0 0px","多云":"0 -40px","暴雪":"0 -480px","大雪-暴雪":"0 -480px","暴雨":"0 -360px","大雨-暴雨":"0 -360px","暴雨-大暴雨":"0 -360px","大暴雨-特大暴雨":"0 -360px","大暴雪":"0 -480px","飑":"0 -880px","大雪":"0 -440px","中雪-大雪":"0 -440px","大雨":"0 -320px","中雨-大雨":"0 -320px","浮层":"0 -920px","雷阵雨":"0 -160px","雷阵雨并伴有冰雹":"0 -200px","霾":"0 -920px","轻雾":"0 -840px","雾":"0 -840px","冰雹":"0 -680px","沙尘暴":"0 -760px","强沙尘暴":"0 -760px","特大暴雪":"0 -520px","小雪":"0 -600px","小雨":"0 -240px","扬沙":"0 -720px","浮尘":"0 -920px","龙卷风":"0 -800px","弱高吹雪":"0 -600px","阴":"0 -80px","雨夹雪":"0 -400px","冻雨":"0 -960px","阵雪":"0 -560px","阵雨":"0 -120px","中雪":"0 -640px","小雪-中雪":"0 -640px","小雨-中雨":"0 -280px","中雨":"0 -280px"};
+        $(document).ready(function() {
+            $("#weekday").html(date.getDate());
+            $.getScript("getWeather.php");
+            $.getScript("lunar.php");
+        });
+        var weather = function(data){
+            weatherInfo = data;
+            $(".cityWrap .name").html(data.weatherinfo.city);
+            $(".cityInfo .name").html(data.weatherinfo.weather1);
+            $(".cityWrap .info").html(data.weatherinfo.city_en);
+            $(".cityInfo .info").html(data.weatherinfo.st1+"℃");
+            $(".weapic").css("background-position",g[data.weatherinfo.weather1]).show();
+        }
+        var lunar = function(data){
+            lunar = data;
+            var month = data.month;
+            var day = data.day;
+            $("#lunarday").html("农历"+month+day);
+            $("#dateday").html(date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate()+"&nbsp;"+getWeek(date.getDay()));
+        }
+        var getWeek = function(day){
+            switch(day){
+                case 0:
+                return "周一";
+                case 1:
+                return "周二";
+                case 2:
+                return "周三";
+                case 3:
+                return "周四";
+                case 4:
+                return "周五";
+                case 5:
+                return "周六";
+                case 6:
+                return "周日";    
+            }
+        }
+    </script>
+</body>
+</html>

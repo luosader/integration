@@ -1,0 +1,118 @@
+带进度条的大文件切片上传
+为了显示一下我是全能型人才，今天就来讲一下使用XmlHttpRequert（下面使用xhr来代替）上传大文件。
+    因为php.ini的约束，或者考虑到各种因素而不会将上传文件的大小设置的非常大，所以，在上传大文件是就需要将大文件切割成一小片小片来逐步上传，此时就需要使用xhr里面的slice函数将文件切割，而这也是切片上传的核心。
+    思路：
+    1、获取上传的文件信息
+    2、封装上传函数（用于递归调用）
+    3、将获取的文件按照要求切成规定大小（此处以2M为例，该值必须要小于php.ini里面的上传文件大小的限制）
+    4、上传第一个切片文件
+    5、上传成功后递归调用该函数，直到全部上传完成
+    6、添加一个变量start记录总共上传的值
+    7、使用xhr.upload.onprogress监听该切片上传的大小
+    8、根据start和xhr.upload.onprogress返回的值以及文件的总共大小来确定大文件上传的总体进度
+    9、js修改css的宽度来实时展示上传进度
+    10、大文件切片上传及进度条显示全部结束
+
+下面附上代码，slice.html为前端处理文件及显示进度条的，slice.php为php接收到上传的切片文件后的处理方法
+
+slice.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>h5大文件切割上传</title>
+    <script type="text/javascript">
+        const LENGTH = 5*1024*1024;
+        var start = 0;
+        var end = start+LENGTH;
+        function sendfile(){        
+            var pic= document.getElementsByTagName('input')[0].files[0];
+            var totalsize = pic.size;
+            if(start >= totalsize)
+                return;        
+            var xhr = new XMLHttpRequest();
+            if(end > totalsize)
+                end = totalsize;
+            var blob = pic.slice(start, end);
+            blob.filename = pic.name;
+            var fd = new FormData();
+            fd.append('part',blob);
+            fd.append('filename',pic.name);                
+            xhr.open('POST', 'sliceup.php', true);
+            xhr.upload.onprogress = function(ev){
+                var percent = ((ev.loaded+start)/totalsize)*100+'%';
+                document.getElementById('bar').style.width = percent;
+            }
+            xhr.onreadystatechange = function(){
+                if(this.readyState == 4){
+                    start = end;
+                    end = start+LENGTH;    
+                    sendfile();            
+                }
+            }
+            xhr.send(fd);
+        }
+    </script>
+    <style type="text/css">
+        #progress{
+            width: 500px;
+            height: 30px;
+            border: 1px solid green;
+        }
+
+        #bar{
+            width: 0%;
+            height: 30px;
+            background: green;
+        }
+    </style>
+</head>
+<!-- 
+用到的api
+file->继承自->blob
+blob有slice方法，可以截取二进制对象的一部分
+思路：
+截取10m，上传
+判断文件有没有截取完毕
+while 还有数据{
+    截取
+    ajax上传
+}
+使用while会导致js无法渲染，所以选用递归解决此问题
+ -->
+<body>
+<h1>HTML5大文件切割上传</h1>
+<input type="file" name="pic" onchange="sendfile()" /> 
+<div id="progress">
+    <div id="bar">
+        
+    </div>
+</div>
+<div id="debug"></div>
+
+</body>
+</html>
+
+
+slice.php
+
+<?php  
+
+// 获取上传文件名，检测该文件是否存在，如果存在，则追加，否则新建
+$filename = $_POST['filename'];
+$os = PHP_OS;
+echo $os;
+var_dump(strpos($os,"WIN"));
+// 对于windows，由于中文乱码，故先进行转码
+if(strpos($os,"WIN")!==false){
+    echo 'here';
+    $filename2 = iconv('utf-8','gbk',$filename);
+}else{
+    $filename2 = $filename;
+}
+if(!file_exists('upload/'.$filename2)){
+    move_uploaded_file($_FILES['part']['tmp_name'],'upload/'.$filename2);
+}else{
+    $tmp = file_get_contents($_FILES['part']['tmp_name']);
+    file_put_contents('upload/'.$filename2,$tmp,FILE_APPEND);
+}
+?>

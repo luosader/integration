@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>h5大文件切割上传</title>
+    <script type="text/javascript">
+        const LENGTH = 5*1024*1024;
+        var start = 0;
+        var end = start+LENGTH;
+        function sendfile(){        
+            var pic= document.getElementsByTagName('input')[0].files[0];
+            var totalsize = pic.size;
+            if(start >= totalsize)
+                return;        
+            var xhr = new XMLHttpRequest();
+            if(end > totalsize)
+                end = totalsize;
+            var blob = pic.slice(start, end);
+            blob.filename = pic.name;
+            var fd = new FormData();
+            fd.append('part',blob);
+            fd.append('filename',pic.name);                
+            xhr.open('POST', 'slice.php', true);
+            xhr.upload.onprogress = function(ev){
+                var percent = ((ev.loaded+start)/totalsize)*100+'%';
+                document.getElementById('bar').style.width = percent;
+            }
+            xhr.onreadystatechange = function(){
+                if(this.readyState == 4){
+                    start = end;
+                    end = start+LENGTH;    
+                    sendfile();            
+                }
+            }
+            xhr.send(fd);
+        }
+    </script>
+    <style type="text/css">
+        #progress{
+            width: 500px;
+            height: 30px;
+            border: 1px solid green;
+        }
+
+        #bar{
+            width: 0%;
+            height: 30px;
+            background: green;
+        }
+    </style>
+</head>
+<!-- 
+用到的api
+file->继承自->blob
+blob有slice方法，可以截取二进制对象的一部分
+思路：
+截取10m，上传
+判断文件有没有截取完毕
+while 还有数据{
+    截取
+    ajax上传
+}
+使用while会导致js无法渲染，所以选用递归解决此问题
+ -->
+<body>
+<h1>HTML5大文件切割上传</h1>
+<input type="file" name="pic" onchange="sendfile()" /> 
+<div id="progress">
+    <div id="bar">
+        
+    </div>
+</div>
+<div id="debug"></div>
+
+</body>
+</html>

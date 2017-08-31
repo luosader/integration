@@ -1,0 +1,105 @@
+@charset "utf-8";
+* {
+	padding: 0;
+	margin: 0;
+	border: none;
+	text-decoration: none;
+	list-style: none;
+	overflow: hidden;
+}
+input, button, select, textarea {
+	outline: none;
+}
+textarea {
+	font-size: 13px;
+	resize: none;
+}
+body {
+	background: #F2F2F2 url(http://imghao.qq.com/haoqq/v101/v1img/xs-bg.png) top center no-repeat;
+}
+.top {
+	width: 100%;
+	height: 65px;
+}
+.top_content {
+	width: 960px;
+	height: 65px;
+	margin: 0 auto;
+}
+#calendarArea {
+	width: 155px;
+	height: 65px;
+	float: left;
+	cursor: pointer;
+	padding-left: 15px;
+}
+#calendarArea:hover, #topWeatherArea:hover {
+	background: url(http://imghao.qq.com/haoqq/v101/v1img/top-hover.png) top right;
+}
+.datepic {
+	background-image: url(http://imghao.qq.com/haoqq/v101/v1img/pur-sprite.png);
+	background-repeat: no-repeat;
+	width: 31px;
+	height: 32px;
+	float: left;
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 32px;
+	display: block;
+	margin: 15px 10px 0 0;
+	float: left;
+}
+#weekday {
+	position: relative;
+	top: 4px;
+	color: #fff;
+}
+#calendarArea ul {
+	float: left;
+	color: #fff;
+	height: 40px;
+	padding-top: 13px;
+	padding-left: 3px;
+}
+#calendarArea #lunarday {
+	font-size: 16px;
+	font-weight: bold;
+}
+#calendarArea #dateday {
+	font-size: 14px;
+}
+#topWeatherArea {
+	width: 165px;
+	height: 65px;
+	float: left;
+	cursor: pointer;
+	color: #fff;
+	padding-left:10px;
+}
+.cityWrap {
+	float: left;
+	margin-top: 15px;
+	padding-left:5px;
+}
+.weapic {
+	width: 40px;
+	height: 40px;
+	background-image: url(http://imghao.qq.com/haoqq/v101/v1img/pur-sprite-wea.png);
+	float: left;
+	display: block;
+	margin: 15px 5px 0 5px;
+	background-repeat: no-repeat;
+	display:none;
+}
+.cityInfo {
+	float: left;
+	margin-top: 15px;
+}
+.name{
+	font-weight: bold;
+	font-size:17px;
+}
+.info{
+	font-size:14px;
+}
