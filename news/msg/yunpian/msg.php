@@ -26,27 +26,82 @@ $data['mobile'] = trim($_POST['phone']); //请用自己的手机号代替
 $data['text'] = $config_arr['msg_sign'].'您的验证码是'.$code;
 $result = $smsOperator->single_send($data);
 
-/*$result = (array)$result;
-if (is_array($result)) {
-    echo $result['success'];exit;
-    // echo $result['statusCode'];die;
-    // echo $result['error'];die;
-    // echo $result['responseData']['code'];die;
-    // echo $result['responseData']['msg'];die;
+$result = (array)$result;
+if ($result['success']) {
+    return true;
 } else {
-    $result->success;exit();
-}*/
+    return false;
+}
 
-print_r($result);exit();
-/*$result['responseData'] = array(
-        [code] => 0
-        [msg] => 发送成功
-        [count] => 1
-        [fee] => 0.05
-        [unit] => RMB
-        [mobile] => 15855156840
-        [sid] => 14805430070
-    );*/
+// var_dump($result);die;
+/*// 原始数据
+// 成功
+object(Result)#26 (5) {
+  ["success"]=>
+  bool(true)
+  ["statusCode"]=>
+  int(200)
+  ["requestData"]=>
+  array(3) {
+    ["mobile"]=>
+    string(11) "18715511536"
+    ["text"]=>
+    string(49) "【微步大数据营销】您的验证码是3436"
+    ["apikey"]=>
+    string(32) "96984feab7ee7412c616fbe854245dbd"
+  }
+  ["responseData"]=>
+  array(7) {
+    ["code"]=>
+    int(0)
+    ["msg"]=>
+    string(12) "发送成功"
+    ["count"]=>
+    int(1)
+    ["fee"]=>
+    float(0.05)
+    ["unit"]=>
+    string(3) "RMB"
+    ["mobile"]=>
+    string(11) "18715511536"
+    ["sid"]=>
+    float(17550673356)
+  }
+  ["error"]=>
+  NULL
+}
+
+// 失败
+object(Result)#26 (5) {
+  ["success"]=>
+  bool(false)
+  ["statusCode"]=>
+  int(400)
+  ["requestData"]=>
+  array(3) {
+    ["mobile"]=>
+    string(11) "18715511536"
+    ["text"]=>
+    string(49) "【微步大数据营销】您的验证码是5450"
+    ["apikey"]=>
+    string(32) "96984feab7ee7412c616fbe854245dbd"
+  }
+  ["responseData"]=>
+  array(4) {
+    ["http_status_code"]=>
+    int(400)
+    ["code"]=>
+    int(22)
+    ["msg"]=>
+    string(71) "验证码类短信1小时内同一手机号发送次数不能超过3次"
+    ["detail"]=>
+    string(71) "验证码类短信1小时内同一手机号发送次数不能超过3次"
+  }
+  ["error"]=>
+  NULL
+}
+*/
+
 
 
 
