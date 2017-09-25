@@ -3,6 +3,7 @@ header('content-type:text/html;charset=utf-8');
 // error_reporting(E_ALL);// 报告所有错误
 error_reporting(E_ALL & ~E_NOTICE);// 屏蔽警告
 // error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));// 显示除了E_NOTICE(提示)和E_WARNING(警告)外的所有错误
+// error_reporting(E_ERROR);
 
 define('IN_INTE', true);
 // 关闭 set_magic_quotes_runtime
@@ -15,7 +16,7 @@ define('__DS__', DIRECTORY_SEPARATOR);//路径分隔符 在linux上是一个"/"�
 define('__PS__', PATH_SEPARATOR);//目录分隔符 在linux上是一个":"号,WIN上是一个";"号
 
 // 定义 opcore 位置 D:\WWW\_svn\_op\opcore\
-define('OPCORE', dirname(dirname(dirname(__FILE__))).__DS__.'opcore'.__DS__);
+define('OPCORE', dirname(dirname(dirname(__FILE__))).__DS__.'op'.__DS__.'opcore'.__DS__);
 
 // 定义基础常量
 define('__ROOT__', dirname(dirname(__FILE__)).__DS__);//定义根目录，物理路径 D:\WWW\_svn\_op\integration\
