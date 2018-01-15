@@ -6,11 +6,11 @@ $subject =
         '支付:{p},支付宝;{p},微信;{p},网银在线;{p},财付通;{p},QQ钱包;{p},京东支付;{p},易宝|'.
         '提现:{w}alipay,支付宝;{w}weixin,微信;{w},网银在线;{w},财付通;{w},QQ钱包;{w},易宝|'.
         '授权:{o},微信;{o},QQ;{o},新浪;{o},淘宝;{o},身份认证;{o}zhima,芝麻信用;{o},人人网;{o},战旗|'.
-        '消息:news,消息;{m}yunpian,云片短信;{m}alidayu,阿里大于;{m}chonry,创瑞;{m},短信宝;{e},QQ邮箱;{e},新浪邮箱|'.
+        '消息:news,消息;#,美洽;{m}yunpian,云片短信;{m}chonry,创瑞;{m}alidayu,阿里大于;{m},短信宝;{e},QQ邮箱;{e},新浪邮箱|'.
         '常用插件:{pl}ValidForm/demo.html,前端验证;{pl}Ueditor/ueditor.php,富文本;{pl}ganged,联动;{pl}My97DatePicker,日期时间;{pl}laydate,日期时间2;{pl}office,Excel等;{pl}JiaThis/JiaThis.php,分享;{pl}graph,图表;{pl}Map,地图;{pl}translate,翻译|'.
         '快递:shipping/kuaidi100,快递100;#,圆通速递;#,EMS|'.
         '多媒体:{pm}Huploadify,H5上传;{pm}preview/1,上传图片预览;{pm}preview/2,点击放大;{pm}canvas,JS压缩;{pm}Slice/slice.html,切片处理;{pm}CkPlayer/ckplayer6.8/demo2.htm,CkPlayer;{pm}shearphoto2.3,shearphoto2.3|'.
-        '云存储:cloudstorage/qcloud/sample.php,腾讯云;#,阿里云;#,百度云;#,网易云|'.
+        '云存储:cloudstorage/qcloud/sample.php,腾讯云;#,七牛云;#,阿里云;#,百度云;#,网易云|'.
         '标准件:{s}idus/list.php,增删改查（列表/单页）;#,CheckBox;{s}category,无限分类;{s}Permission/power.php,权限管理;#,数据库备份还原;{s}item,商品属性;{s}cache,缓存应用|'.
         '拓展后端:{eb}rbac,RBAC;{eb}Smarty/readme.txt,Smarty引擎;#,三级分销;#,家谱图;#,步骤引导;#,消息队列;{eb}algo,算法;{eb}zip,压缩;ext/part,小零件|'.
         '拓展前端:#,HTML通用;#,artTemplate引擎;#,AngularJS(前端框架);{ef}JqueryMultiselect/demo.htm,下拉多选;#,zclip;{ef}lazyload/demo.htm,懒加载;{ef}game,游戏|'.
