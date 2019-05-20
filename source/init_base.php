@@ -15,7 +15,8 @@ if (PHP_VERSION >= '5.1') date_default_timezone_set('PRC');
 define('__DS__', DIRECTORY_SEPARATOR);//路径分隔符 在linux上是一个"/"号,WIN上是一个"\"号
 define('__PS__', PATH_SEPARATOR);//目录分隔符 在linux上是一个":"号,WIN上是一个";"号
 
-// 定义 opcore 位置 D:\WWW\_svn\_op\opcore\
+// 当前项目位置 D:\WWW\Github\_lothar-org\integration\index.php
+// 定义 opcore 位置 D:\WWW\Github\_lothar\op\opcore\
 define('OPCORE', dirname(dirname(dirname(__FILE__))).__DS__.'op'.__DS__.'opcore'.__DS__);
 
 // 定义基础常量
