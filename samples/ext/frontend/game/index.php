@@ -6,6 +6,6 @@ $subject =
     ;
 $search = array('{p}','{m}');
 $replace = array('php/','mysql/');
-$arrMenu = MenuList($subject,$search,$replace);
+$arrMenu = menuList($subject,$search,$replace);
 debug($arrMenu,1);
 ?>

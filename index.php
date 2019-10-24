@@ -26,12 +26,12 @@ require_once './source/init.php';
 
 
 /*对URL的传参处理*/
-$http_param = http_param();
-// debug($http_param,1);
+$params = http_param();
+// debug($params,1);
 
-if ($http_param) {
-    extract($http_param);
-    template($http_param);
+if ($params) {
+    extract($params);
+    template($params);
 } else {
     if ($m) {
         include_once $m.'index.php';

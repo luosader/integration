@@ -8,6 +8,6 @@ $subject =
     ;
 $search = array('{s}','{m}','{e}');
 $replace = array('sys/','msg/','email/');
-$arrMenu = MenuList($subject,$search,$replace);
+$arrMenu = menuList($subject,$search,$replace);
 debug($arrMenu,1);
 ?>

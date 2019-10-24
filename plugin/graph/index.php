@@ -5,7 +5,7 @@ $subject =
         'EChart:EChart,基本;#,柱状图;#,折线图;#,扇形图;#,热力图;#,地图;#,ER;#,更多|'.
         'gvChart:gvChart,常用'
     ;
-$arrMenu = MenuList($subject);
+$arrMenu = menuList($subject);
 debug($arrMenu,1);
 
 ?>

@@ -19,7 +19,7 @@ $subject =
 $search = array('{p}','{w}','{o}','{m}','{e}','{pl}','{pm}','{s}','{eb}','{ef}');
 // samples/
 $replace = array('samples/payment/','samples/withdraw/','samples/oauth/','samples/msg/sms/','samples/msg/email/','plugin/','plugin/media/','samples/standard/','samples/ext/backend/','samples/ext/frontend/');
-$arrMenu = MenuList($subject,$search,$replace,$attr,1);
+$arrMenu = menuList($subject,$search,$replace,$attr,1);
 debug($arrMenu,1);
 
 /*$arrMenu = array(
